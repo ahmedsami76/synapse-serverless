@@ -151,6 +151,26 @@
 				"type": "SqlQuery"
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/04-Create Sales DB')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": " CREATE DATABASE Sales\n   COLLATE Latin1_General_100_BIN2_UTF8;\n GO;\n\n Use Sales;\n GO;\n\n CREATE EXTERNAL DATA SOURCE sales_data WITH (\n     LOCATION = 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/'\n );\n GO;\n\n\n ----\n ",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
 		}
 	]
 }
