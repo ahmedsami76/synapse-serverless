@@ -1,6 +1,9 @@
 {
 	"name": "04-Create Sales DB",
 	"properties": {
+		"folder": {
+			"name": "External Data"
+		},
 		"content": {
 			"query": " CREATE DATABASE Sales\n   COLLATE Latin1_General_100_BIN2_UTF8;\n GO;\n\n Use Sales;\n GO;\n\n CREATE EXTERNAL DATA SOURCE sales_data WITH (\n     LOCATION = 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/'\n );\n GO;\n\n\n ----\n -- Query CVS\nUse Sales;\nSELECT *\nFROM\n     OPENROWSET(\n         BULK 'csv/*.csv',\n         DATA_SOURCE = 'sales_data',\n         FORMAT = 'CSV',\n         PARSER_VERSION = '2.0'\n     ) AS orders\n\n \n --Query Parquet\n SELECT *\n FROM  \n     OPENROWSET(\n         BULK 'parquet/year=*/*.snappy.parquet',\n         DATA_SOURCE = 'sales_data',\n         FORMAT='PARQUET'\n     ) AS orders\n WHERE orders.filepath(1) = '2019'\n\n\n",
 			"metadata": {
