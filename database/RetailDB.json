@@ -1,0 +1,22 @@
+{
+	"name": "RetailDB",
+	"properties": {
+		"Name": "RetailDB",
+		"EntityType": "DATABASE",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://files@datalakebq5d8yi.dfs.core.windows.net/RetailDB",
+			"Properties": {
+				"FormatType": "csv",
+				"LinkedServiceName": "synapsebq5d8yi-WorkspaceDefaultStorage"
+			}
+		}
+	},
+	"type": "DATABASE"
+}
