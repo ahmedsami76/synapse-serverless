@@ -97,6 +97,9 @@
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"folder": {
+					"name": "Explore"
+				},
 				"content": {
 					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/csv/**',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0'\n    ) AS [result]\n\n\n\n----\n SELECT\n     TOP 100 *\n FROM\n     OPENROWSET(\n         BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/csv/**',\n         FORMAT = 'CSV',\n         PARSER_VERSION='2.0'\n     )\n     WITH (\n         SalesOrderNumber VARCHAR(10) COLLATE Latin1_General_100_BIN2_UTF8,\n         SalesOrderLineNumber INT,\n         OrderDate DATE,\n         CustomerName VARCHAR(25) COLLATE Latin1_General_100_BIN2_UTF8,\n         EmailAddress VARCHAR(50) COLLATE Latin1_General_100_BIN2_UTF8,\n         Item VARCHAR(30) COLLATE Latin1_General_100_BIN2_UTF8,\n         Quantity INT,\n         UnitPrice DECIMAL(18,2),\n         TaxAmount DECIMAL (18,2)\n     ) AS [result]",
 					"metadata": {
@@ -117,6 +120,9 @@
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"folder": {
+					"name": "Explore"
+				},
 				"content": {
 					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/parquet/**',\n        FORMAT = 'PARQUET'\n    ) AS [result]\n\n\n-----\n SELECT YEAR(OrderDate) AS OrderYear,\n        COUNT(*) AS OrderedItems\n FROM\n     OPENROWSET(\n         BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/parquet/**',\n         FORMAT = 'PARQUET'\n     ) AS [result]\n GROUP BY YEAR(OrderDate)\n ORDER BY OrderYear\n\n\n\n -----\n  SELECT YEAR(OrderDate) AS OrderYear,\n        COUNT(*) AS OrderedItems\n FROM\n     OPENROWSET(\n         BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/parquet/year=*/**',\n         FORMAT = 'PARQUET'\n     ) AS [result]\n WHERE [result].filepath(1) IN ('2019', '2020')\n GROUP BY YEAR(OrderDate)\n ORDER BY OrderYear",
 					"metadata": {
@@ -137,6 +143,9 @@
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"folder": {
+					"name": "Explore"
+				},
 				"content": {
 					"query": " SELECT\n     TOP 100 *\n FROM\n     OPENROWSET(\n         BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/json/**',\n         FORMAT = 'CSV',\n         FIELDTERMINATOR ='0x0b',\n         FIELDQUOTE = '0x0b',\n         ROWTERMINATOR = '0x0b'\n     ) WITH (Doc NVARCHAR(MAX)) as rows\n\n\n---------\n SELECT JSON_VALUE(Doc, '$.SalesOrderNumber') AS OrderNumber,\n        JSON_VALUE(Doc, '$.CustomerName') AS Customer,\n        Doc\n FROM\n     OPENROWSET(\n         BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/json/**',\n         FORMAT = 'CSV',\n         FIELDTERMINATOR ='0x0b',\n         FIELDQUOTE = '0x0b',\n         ROWTERMINATOR = '0x0b'\n     ) WITH (Doc NVARCHAR(MAX)) as rows\n\n",
 					"metadata": {
@@ -157,6 +166,9 @@
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"folder": {
+					"name": "External Data"
+				},
 				"content": {
 					"query": " CREATE DATABASE Sales\n   COLLATE Latin1_General_100_BIN2_UTF8;\n GO;\n\n Use Sales;\n GO;\n\n CREATE EXTERNAL DATA SOURCE sales_data WITH (\n     LOCATION = 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/'\n );\n GO;\n\n\n ----\n -- Query CVS\nUse Sales;\nSELECT *\nFROM\n     OPENROWSET(\n         BULK 'csv/*.csv',\n         DATA_SOURCE = 'sales_data',\n         FORMAT = 'CSV',\n         PARSER_VERSION = '2.0'\n     ) AS orders\n\n \n --Query Parquet\n SELECT *\n FROM  \n     OPENROWSET(\n         BULK 'parquet/year=*/*.snappy.parquet',\n         DATA_SOURCE = 'sales_data',\n         FORMAT='PARQUET'\n     ) AS orders\n WHERE orders.filepath(1) = '2019'\n\n\n",
 					"metadata": {
