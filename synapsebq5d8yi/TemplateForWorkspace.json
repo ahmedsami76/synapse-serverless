@@ -309,7 +309,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/22-Transform-CETAS')]",
+			"name": "[concat(parameters('workspaceName'), '/11-Transform-CETAS')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -1000,6 +1000,23 @@
 			},
 			"dependsOn": [],
 			"location": "uksouth"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/12-Transform-SPROC')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Transform"
+				},
+				"content": {
+					"metadata": {
+						"language": "sql"
+					}
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
 		}
 	]
 }
