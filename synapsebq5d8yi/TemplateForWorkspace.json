@@ -231,12 +231,12 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"name": "[concat(parameters('workspaceName'), '/07-RetailDB')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "SELECT TOP (100) [CustomerId]\n,[FirstName]\n,[LastName]\n,[EmailAddress]\n,[Phone]\n FROM [RetailDB].[dbo].[Customer]",
+					"query": "USE RetailDB;\nGO\n\nSELECT o.SalesOrderID, c.EmailAddress, p.ProductName, o.Quantity\nFROM SalesOrder AS o\nJOIN Customer AS c ON o.CustomerId = c.CustomerId\nJOIN Product AS p ON o.ProductId = p.ProductId",
 					"metadata": {
 						"language": "sql"
 					},
@@ -244,27 +244,7 @@
 						"databaseName": "RetailDB",
 						"poolName": "Built-in"
 					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [ProductId]\n,[ProductName]\n,[IntroductionDate]\n,[ActualAbandonmentDate]\n,[ProductGrossWeight]\n,[ItemSku]\n,[ListPrice]\n FROM [RetailDB].[dbo].[Product]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "RetailDB",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
+					"resultLimit": -1
 				},
 				"type": "SqlQuery"
 			},
@@ -327,8 +307,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "long"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "FirstName",
@@ -341,8 +320,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "LastName",
@@ -355,8 +333,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "EmailAddress",
@@ -369,8 +346,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "Phone",
@@ -383,8 +359,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									}
 								],
 								"Format": {
@@ -395,8 +370,8 @@
 									"Properties": {
 										"path": "abfss://files@datalakebq5d8yi.dfs.core.windows.net/RetailDB/Customer",
 										"delimiter": ",",
-										"multiLine": "false",
 										"firstRowAsHeader": "false",
+										"multiLine": "false",
 										"serialization.format": "1",
 										"escape": "\\",
 										"quote": "\"",
@@ -464,8 +439,7 @@
 										"BaseAttributeReference": {
 											"Entity": "RetailProduct.cdm.json/RetailProduct",
 											"Name": "ProductId"
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "ProductName",
@@ -482,8 +456,7 @@
 										"BaseAttributeReference": {
 											"Entity": "RetailProduct.cdm.json/RetailProduct",
 											"Name": "ProductName"
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "IntroductionDate",
@@ -500,8 +473,7 @@
 										"BaseAttributeReference": {
 											"Entity": "RetailProduct.cdm.json/RetailProduct",
 											"Name": "IntroductionDate"
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "ActualAbandonmentDate",
@@ -518,8 +490,7 @@
 										"BaseAttributeReference": {
 											"Entity": "RetailProduct.cdm.json/RetailProduct",
 											"Name": "ActualAbandonmentDate"
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "ProductGrossWeight",
@@ -537,8 +508,7 @@
 										"BaseAttributeReference": {
 											"Entity": "RetailProduct.cdm.json/RetailProduct",
 											"Name": "ProductGrossWeight"
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "ItemSku",
@@ -555,8 +525,7 @@
 										"BaseAttributeReference": {
 											"Entity": "RetailProduct.cdm.json/RetailProduct",
 											"Name": "ItemSku"
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "ListPrice",
@@ -570,8 +539,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "decimal"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									}
 								],
 								"Format": {
@@ -582,8 +550,8 @@
 									"Properties": {
 										"path": "abfss://files@datalakebq5d8yi.dfs.core.windows.net/RetailDB/Product",
 										"delimiter": ",",
-										"multiLine": "false",
 										"firstRowAsHeader": "false",
+										"multiLine": "false",
 										"serialization.format": "1",
 										"escape": "\\",
 										"quote": "\"",
@@ -647,8 +615,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "long"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "OrderDate",
@@ -660,8 +627,7 @@
 												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
 												"HIVE_TYPE_STRING": "timestamp"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "LineItemId",
@@ -672,8 +638,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "long"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "CustomerId",
@@ -684,8 +649,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "long"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "ProductId",
@@ -696,8 +660,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "long"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									},
 									{
 										"Name": "Quantity",
@@ -708,8 +671,7 @@
 											"Properties": {
 												"HIVE_TYPE_STRING": "long"
 											}
-										},
-										"DeltaFormatInvalidMessages": []
+										}
 									}
 								],
 								"Format": {
@@ -720,8 +682,8 @@
 									"Properties": {
 										"path": "abfss://files@datalakebq5d8yi.dfs.core.windows.net/RetailDB/SalesOrder",
 										"delimiter": ",",
-										"multiLine": "false",
 										"firstRowAsHeader": "false",
+										"multiLine": "false",
 										"serialization.format": "1",
 										"FormatTypeSetToDatabaseDefault": false,
 										"header": "false"
