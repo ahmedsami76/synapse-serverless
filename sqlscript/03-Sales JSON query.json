@@ -1,0 +1,17 @@
+{
+	"name": "03-Sales JSON query",
+	"properties": {
+		"content": {
+			"query": " SELECT\n     TOP 100 *\n FROM\n     OPENROWSET(\n         BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/json/**',\n         FORMAT = 'CSV',\n         FIELDTERMINATOR ='0x0b',\n         FIELDQUOTE = '0x0b',\n         ROWTERMINATOR = '0x0b'\n     ) WITH (Doc NVARCHAR(MAX)) as rows\n\n\n---------\n SELECT JSON_VALUE(Doc, '$.SalesOrderNumber') AS OrderNumber,\n        JSON_VALUE(Doc, '$.CustomerName') AS Customer,\n        Doc\n FROM\n     OPENROWSET(\n         BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/json/**',\n         FORMAT = 'CSV',\n         FIELDTERMINATOR ='0x0b',\n         FIELDQUOTE = '0x0b',\n         ROWTERMINATOR = '0x0b'\n     ) WITH (Doc NVARCHAR(MAX)) as rows\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
