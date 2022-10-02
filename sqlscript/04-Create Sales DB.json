@@ -1,0 +1,17 @@
+{
+	"name": "04-Create Sales DB",
+	"properties": {
+		"content": {
+			"query": " CREATE DATABASE Sales\n   COLLATE Latin1_General_100_BIN2_UTF8;\n GO;\n\n Use Sales;\n GO;\n\n CREATE EXTERNAL DATA SOURCE sales_data WITH (\n     LOCATION = 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales/'\n );\n GO;\n\n\n ----\n ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
