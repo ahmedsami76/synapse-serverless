@@ -263,7 +263,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/08RetailDB')]",
+			"name": "[concat(parameters('workspaceName'), '/08-RetailDB')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -283,7 +283,7 @@
 						"spark.dynamicAllocation.enabled": "true",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "4",
-						"spark.autotune.trackingId": "170575f6-5d13-4c21-bff6-8098f6a6b4c3"
+						"spark.autotune.trackingId": "59dfbd78-52fe-45f9-a322-29c2d2f381ca"
 					}
 				},
 				"metadata": {
