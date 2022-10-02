@@ -332,6 +332,29 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/12-Transform-SPROC')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Transform"
+				},
+				"content": {
+					"query": " USE SalesTransform;\n GO;\n    \n CREATE PROCEDURE sp_GetYearlySales\n AS\n BEGIN\n     IF EXISTS (\n             SELECT * FROM sys.external_tables\n             WHERE name = 'YearlySalesTotals'\n         )\n         DROP EXTERNAL TABLE YearlySalesTotals\n        \n     CREATE EXTERNAL TABLE YearlySalesTotals\n     WITH (\n             LOCATION = 'sales-transform/yearlysales/',\n             DATA_SOURCE = sales_data,\n             FILE_FORMAT = ParquetFormat\n         )\n     AS\n     SELECT YEAR(OrderDate) AS CalendarYear,\n            SUM(Quantity) AS ItemsSold,\n            ROUND(SUM(UnitPrice) - SUM(TaxAmount), 2) AS NetRevenue\n     FROM\n         OPENROWSET(\n             BULK 'sales-transform/csv/*.csv',\n             DATA_SOURCE = 'sales_data',\n             FORMAT = 'CSV',\n             PARSER_VERSION = '2.0',\n             HEADER_ROW = TRUE\n         ) AS orders\n     GROUP BY YEAR(OrderDate)\n END",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "SalesTransform",
+						"poolName": "Built-in"
+					},
+					"resultLimit": -1
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/08-RetailDB')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -1000,23 +1023,6 @@
 			},
 			"dependsOn": [],
 			"location": "uksouth"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/12-Transform-SPROC')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"folder": {
-					"name": "Transform"
-				},
-				"content": {
-					"metadata": {
-						"language": "sql"
-					}
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
 		}
 	]
 }
