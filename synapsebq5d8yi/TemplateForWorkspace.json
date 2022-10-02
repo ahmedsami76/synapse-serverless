@@ -283,7 +283,7 @@
 						"spark.dynamicAllocation.enabled": "true",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "4",
-						"spark.autotune.trackingId": "1605f6de-7621-4012-a239-ba62ad2d67d5"
+						"spark.autotune.trackingId": "170575f6-5d13-4c21-bff6-8098f6a6b4c3"
 					}
 				},
 				"metadata": {
@@ -319,14 +319,63 @@
 						"metadata": {
 							"microsoft": {
 								"language": "sparksql"
-							}
+							},
+							"collapsed": false
 						},
 						"source": [
 							"%%sql\n",
 							"select * from `RetailDB`.`SalesOrder`"
 						],
 						"outputs": [],
-						"execution_count": 1
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"microsoft": {
+								"language": "sparksql"
+							},
+							"collapsed": false
+						},
+						"source": [
+							" %%sql\n",
+							" INSERT INTO `RetailDB`.`SalesOrder` VALUES (99999, CAST('2022-01-01' as timestamp), 1, 6, 5, 1)"
+						],
+						"outputs": [],
+						"execution_count": 4
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"microsoft": {
+								"language": "sparksql"
+							},
+							"collapsed": false
+						},
+						"source": [
+							" %%sql\n",
+							" SELECT * FROM `RetailDB`.`SalesOrder` WHERE SalesOrderId = 99999"
+						],
+						"outputs": [],
+						"execution_count": 5
 					}
 				]
 			},
