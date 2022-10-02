@@ -1,0 +1,20 @@
+{
+	"name": "22-Transform-CETAS",
+	"properties": {
+		"folder": {
+			"name": "Transform"
+		},
+		"content": {
+			"query": " USE SalesTransform;\n GO;\n    \n SELECT Item AS Product,\n        SUM(Quantity) AS ItemsSold,\n        ROUND(SUM(UnitPrice) - SUM(TaxAmount), 2) AS NetRevenue\n FROM\n     OPENROWSET(\n         BULK 'sales-transform/csv/*.csv',\n         DATA_SOURCE = 'sales_data',\n         FORMAT = 'CSV',\n         PARSER_VERSION = '2.0',\n         HEADER_ROW = TRUE\n     ) AS orders\n GROUP BY Item;\n\n\n -----\n -- CETAS\n  CREATE EXTERNAL TABLE ProductSalesTotals\n     WITH (\n         LOCATION = 'sales-transform/productsales/',\n         DATA_SOURCE = sales_data,\n         FILE_FORMAT = ParquetFormat\n     )\n AS\n SELECT Item AS Product,\n     SUM(Quantity) AS ItemsSold,\n     ROUND(SUM(UnitPrice) - SUM(TaxAmount), 2) AS NetRevenue\n FROM\n     OPENROWSET(\n         BULK 'sales-transform/csv/*.csv',\n         DATA_SOURCE = 'sales_data',\n         FORMAT = 'CSV',\n         PARSER_VERSION = '2.0',\n         HEADER_ROW = TRUE\n     ) AS orders\n GROUP BY Item;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SalesTransform",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
