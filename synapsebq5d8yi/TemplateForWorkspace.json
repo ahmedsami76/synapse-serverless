@@ -263,6 +263,76 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/08RetailDB')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "spp01",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 1,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "true",
+						"spark.dynamicAllocation.minExecutors": "1",
+						"spark.dynamicAllocation.maxExecutors": "4",
+						"spark.autotune.trackingId": "1605f6de-7621-4012-a239-ba62ad2d67d5"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/70125636-3047-48e0-8b07-485c08060433/resourceGroups/dp500-bq5d8yi/providers/Microsoft.Synapse/workspaces/synapsebq5d8yi/bigDataPools/spp01",
+						"name": "spp01",
+						"type": "Spark",
+						"endpoint": "https://synapsebq5d8yi.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spp01",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net"
+						},
+						"sparkVersion": "3.2",
+						"nodeCount": 10,
+						"cores": 4,
+						"memory": 28,
+						"automaticScaleJobs": true
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {
+							"microsoft": {
+								"language": "sparksql"
+							}
+						},
+						"source": [
+							"%%sql\n",
+							"select * from `RetailDB`.`SalesOrder`"
+						],
+						"outputs": [],
+						"execution_count": 1
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/RetailDB')]",
 			"type": "Microsoft.Synapse/workspaces/databases",
 			"apiVersion": "2019-06-01-preview",
