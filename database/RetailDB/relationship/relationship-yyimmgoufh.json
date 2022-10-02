@@ -1,0 +1,23 @@
+{
+	"name": "relationship-yyimmgoufh",
+	"properties": {
+		"Name": "relationship-yyimmgoufh",
+		"EntityType": "RELATIONSHIP",
+		"Namespace": {
+			"DatabaseName": "RetailDB"
+		},
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"FromTableName": "SalesOrder",
+		"ToTableName": "Product",
+		"ColumnRelationshipInformations": [
+			{
+				"FromColumnName": "ProductId",
+				"ToColumnName": "ProductId"
+			}
+		],
+		"RelationshipType": 0
+	},
+	"type": "RELATIONSHIP"
+}
