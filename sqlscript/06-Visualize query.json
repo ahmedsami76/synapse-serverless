@@ -1,0 +1,20 @@
+{
+	"name": "06-Visualize query",
+	"properties": {
+		"folder": {
+			"name": "External Data"
+		},
+		"content": {
+			"query": "USE Sales;\nGO\n\nSELECT YEAR(OrderDate) AS OrderYear,\n    SUM((UnitPrice * Quantity) + TaxAmount) AS GrossRevenue\nFROM dbo.orders\nGROUP BY YEAR(OrderDate)\nORDER BY OrderYear;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Sales",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
