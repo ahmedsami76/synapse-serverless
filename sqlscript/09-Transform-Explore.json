@@ -1,6 +1,9 @@
 {
 	"name": "09-Transform-Explore",
 	"properties": {
+		"folder": {
+			"name": "Transform"
+		},
 		"content": {
 			"query": "\n-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales-transform/csv/**',\n        FORMAT = 'CSV',\n        PARSER_VERSION='2.0'\n    ) AS [result]\n\n--------\n\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://datalakebq5d8yi.dfs.core.windows.net/files/sales-transform/csv/**',\n        FORMAT = 'CSV',\n        PARSER_VERSION='2.0',\n        HEADER_ROW = TRUE\n    ) AS [result]\n\n\n",
 			"metadata": {
