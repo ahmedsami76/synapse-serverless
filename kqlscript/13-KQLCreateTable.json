@@ -1,0 +1,16 @@
+{
+	"name": "13-KQLCreateTable",
+	"properties": {
+		"content": {
+			"query": ".create table StormEvents (StartTime: datetime, EndTime: datetime, EpisodeId: int, EventId: int, State: string, EventType: string, InjuriesDirect: int, InjuriesIndirect: int, DeathsDirect: int, DeathsIndirect: int, DamageProperty: int, DamageCrops: int, Source: string, BeginLocation: string, EndLocation: string, BeginLat: real, BeginLon: real, EndLat: real, EndLon: real, EpisodeNarrative: string, EventNarrative: string, StormSummary: dynamic)",
+			"metadata": {
+				"language": "kql"
+			},
+			"currentConnection": {
+				"poolName": "adxpool0001",
+				"databaseName": "TestDatabase"
+			}
+		},
+		"type": "KqlQuery"
+	}
+}
