@@ -1,0 +1,19 @@
+{
+	"name": "DestinationDataset_owk",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blockblob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "files"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
