@@ -5,6 +5,9 @@
 		"workspaceName": {
 			"value": "synapsebq5d8yi"
 		},
+		"blockblob_connectionString": {
+			"value": ""
+		},
 		"synapsebq5d8yi-WorkspaceDefaultSqlServer_connectionString": {
 			"value": ""
 		},
